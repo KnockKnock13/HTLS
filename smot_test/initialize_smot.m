@@ -5,11 +5,11 @@ param.mota_th = 0.5;    % we want the detections to stay in width/2.
 param.debug = false;
 
 %% DATASET
-% datasetPath = '~/research/data/smot';
+
 seqPath = [datasetPath '/' seqName '/img'];
 itlName = [datasetPath '/' seqName '/' seqName '.itl'];
 savePath = [datasetPath '/' seqName '/' method ];
-if ~exist(savePath,'dir')
+if ~exist(savePath,'dir') && saveOutput
     mkdir(savePath)
 end
 
@@ -71,7 +71,9 @@ switch seqName
         error('Unknown sequence!');
 end
 
-if isequal(method,'ksp')
+if isequal(method,'ksp') 
+    
+    error('KSP method is not supported in shared version. Sorry!');
     % executable for ksp
     kspRun = '/home/caglayan/research/code/c/work/epfl_ksp/ksp1_1/ksp';
     param.ksp_run = kspRun;
@@ -84,7 +86,7 @@ if isequal(method,'ksp')
     
     % temporary ksp setup file folder
     kspConfPath  = [ datasetPath '/' seqName '/ksp_conf' ];
-    if ~exist(kspConfPath,'dir')
+    if ~exist(kspConfPath,'dir') && saveOutput
         mkdir(kspConfPath);
     end
     INPUT_FORMAT = [ kspConfPath '/prob_f%05d.dat'];
