@@ -3,6 +3,8 @@ function mot = smot_clear_mot_fp(itl0,itlh,idlfp,intthresh)
 % itl0: original (ground truth) tracklet labels
 % itlh: hypothesis tracklet labels
 % intthresh: intersection threshold
+
+
 Nmax = size(itl0,2);
 M = zeros(Nmax,1);    % correspondence list for original
 % NHmax = size(itlh,2);
@@ -58,42 +60,15 @@ for t = 1:T_end
     if ~isempty(fxy) && ~isempty(hxy)        
         p = find_correspondences(fxy,hxy,3);
         fp = fp + sum(p>0);
-        if any(p>0)
-            35;
-        end
-        35;        
+
     end
-%         fp = fp + (Nh - Na);
     
-    if(Nh-Na) >0
-        35;
-    end
+
     
     % if there are objects which could not be assigned they are false
     % negative (misses)
-    if No > Na
-        35;
-    end
+
     fn = fn + (No - Na);
-    
-    if 0 & (No-Na)>0
-        figure(51);clf;
-        for i=1:size(orects,2)
-            rectangle('Position',orects(:,i),'EdgeColor','r');
-        end
-        figure(52);clf;
-        for i=1:size(hrects,2)
-            rectangle('Position',hrects(:,i),'EdgeColor','b');
-        end
-        
-        
-        35;
-    end
-    
-    % correspondences for this time spot
-%     [oidx' hidx(c)']   % debug
-
-
     
     for n = 1:size(oidx,2)
         
@@ -138,13 +113,6 @@ mot.g = g;
 mot.mota = mota;
 mot.mmerat = mmerat;
 
-35;
-
-
-
-
-
-
 
 
 
@@ -165,14 +133,8 @@ function c = find_correspondences(oxy,hxy,th)
 % find the correspondences
 D = distance_sq(oxy,hxy).^(1/2);
 maxD = max(D(:));
-% FIX: augment D with one correct assignment 
-% to make munkres work right
-% D = [D 1e8*ones(size(D,1),1)];
-% D = [D; 1e8*ones(1,size(D,2))];
-% D(end,end) = 0;
 
 % we want detections within a radius
 D(D>th) = maxD*10;  % munkres does not like inf
-% c = munkres(D);
 c = generalizedLinearAssignment(D,maxD*5);
-35;
+

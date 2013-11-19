@@ -64,9 +64,7 @@ hi = hankel_mo(hi,[nr nc]);
 
 
 % make the input sequence hankel
-% Ab = mex_hankel_mo(u,[nr nc]);
 Ab = u(hi); % fast indexing (hopefully)
-% [Ab,d] = hankel_mo(u,[nr nc]);
 
 
 % WARNING: check this!!!
@@ -74,16 +72,6 @@ d = ones(1,N_u);
 
 A = Ab(:,1:end-1);
 b = Ab(:,end);
-
-
-% initializations
-% WARNING. Pay attention below. eta overwrites x0.
-% if ~isequal(eta,eta*0)
-%     Ef = hankel_mo(eta,[nr nc]);
-%     E = Ef(:,1:end-1);
-%     f = Ef(:,end);
-%     x0 = (A+E)\(b+f);
-% end
 
 if ~isempty(x0) 
     x = x0;
@@ -97,26 +85,15 @@ P1 = sparse(P1);
 
 eta = reshape(eta,[D_u*N_u 1]);
 
+% remember D is multiplying eta
+D = diag(reshape(repmat(Omega,[D_u 1]),size(eta)));
+D = sparse(D);
 
-% if ~isempty(Omega)
-    % remember D is multiplying eta
-    D = diag(reshape(repmat(Omega,[D_u 1]),size(eta)));
-    D = sparse(D);
-%     D = diag(reshape(repmat(1./d.*Omega,[D_u 1]),size(eta)));    % this gives same importance to all samples
-% else
-%     D = diag(reshape(repmat(ones(1,N_u),[D_u 1]),size(eta)));
-% end
-% else
-%     D = eye(N_u*D_u);
-%     D = diag(reshape(repmat(d,[D_u 1]),size(eta)));
-%     D = diag(reshape(repmat(1./d,[D_u 1]),size(eta)));
-
-% end
 %!!!
 Yrow = zeros(1,D_u*(N_u-1));
 YP0 = sparse(nr,D_u*N_u);
 ti = 1:nr+1:nr*nr;
-% E = zeros(nr,nc-1);
+
 
 M = sparse(nr+D_u*N_u,D_u*N_u+R);
 
@@ -134,11 +111,11 @@ for iter=1:maxiter
     
 %     Yrow(1:D_u:D_u*R) = x';
 %     Y = toeplitz([Yrow(1,1);zeros(nr-1,1)], Yrow );
-    % Y*P0 = [Y|0]
+%     Y*P0 = [Y|0]
 %     YP0 = [Y zeros(nr,D_u)];
     
     
-    f   = eta(end-nr+1:end);
+    f = eta(end-nr+1:end);
     
     % compute r
     r = b+f - (A+E)*x;
@@ -158,12 +135,11 @@ for iter=1:maxiter
     catch err
         [warnmsg,~] = lastwarn;
         if isequal(warnmsg,'MATLAB:rankDeficientMatrix')
-%         if ~isempty(lastwarn)
             lastwarn('');
             break;
         end        
     end
-%     end
+
     
     % update parameters
     deta = dparam(1:N_u*D_u,1);
@@ -189,14 +165,16 @@ for iter=1:maxiter
         break;
     end    
 end
+% reshape variables to original size
 eta = reshape(eta,size(u));
 u_hat = u + eta;
 mu_eta = norm(eta.*repmat(1.*Omega,[D_u 1]),'fro')/(sum(Omega)*D_u);
+
 % iter
 if 0
     figure(51)
     plot([u' u_hat']);
 %     plot([u(2,:)' u_hat(2,:)'])    
 end
-35;
+
 

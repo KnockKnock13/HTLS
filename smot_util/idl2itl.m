@@ -161,29 +161,6 @@ end
 
 xy = xy(:,tfirst:t-1);
     
-% tlast = tfirst;
-% xy(:,tlast) = idl(tlast).xy(ind,:)';
-% F{tlast}(ind) = -1;
-% 
-% 
-% while tlast < T && B{tlast}(ind)~=0
-%     bind = B{tlast}(ind);
-%     
-%     xy(:,tlast+1) = idl(tlast+1).xy(bind,:)';
-%     F{tlast}(ind) = -1;
-%     
-%     ind = bind;    
-%     tlast = tlast + 1;    
-% end
-% 
-% F{tlast}(bind) = 0;
-
-
-
-% delete empty part
-% xy = xy(:,tfirst:tlast);
-
-
 % find repeated numbers in x
 function n = nonunique(x)
 

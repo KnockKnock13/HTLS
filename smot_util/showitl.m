@@ -118,36 +118,3 @@ for t = 1:hseq.NumOfFrames
     
    
 end
-
-% for t = 1:hseq.NumOfFrames
-% 
-%     img = grabFrame(hseq);    
-%     imshow(img); hold on;
-%     
-%     [idx,rects] = get_itl_rects(itl,t);
-%     
-%     for k=1:length(idx)
-%         rect = rects(:,k);
-%         colorid = mod(idx(k),256)+1;
-%         rectangle('Position',rect,'EdgeColor',colorSet(colorid,:),'LineWidth',3);
-%         text(rect(1)+5,rect(2)+5,int2str(idx(k)),'Color',colorSet(colorid,:),'FontSize',18);
-%         
-%         if tail>0
-%             
-%         end
-%     end
-%     hold off;
-%     drawnow;
-%         
-% 
-%     
-%     if ~isempty(saveFolder)
-%         frame = getframe(hFig);
-%         [~,imgName,imgExt] = fileparts(hseq.CurrentImageName);
-%         imgFullName = [saveFolder '/' imgName imgExt];
-%         display(['saving ' imgFullName]);
-%         imwrite(frame.cdata,imgFullName);
-%     end
-%     
-% end
-

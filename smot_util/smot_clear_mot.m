@@ -130,13 +130,6 @@ mot.mmerat = mmerat;
 35;
 
 
-
-
-
-
-
-
-
 function tidx = itl_tidx(itl)
 T = max([itl.t_end]);
 tidx = cell(1,T);

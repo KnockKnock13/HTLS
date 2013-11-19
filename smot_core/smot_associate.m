@@ -82,16 +82,3 @@ for t = 1:W:T-1
 end
 
 etime = toc;
-% % do a final association among windows
-% % FIX: eliminate very small tracklets, we do not need them.
-% % They are error prone at this stage
-% len = [itl.length];
-% itl(len<=2) = [];
-% 
-% itl = associate_itl(itl,param);
-% 
-% figure(1)
-% drawidl(idl);
-% 
-% figure(2)
-% drawitl(itl);

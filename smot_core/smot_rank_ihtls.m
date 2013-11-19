@@ -42,8 +42,6 @@ R_Heuristic = 0; %sum(s>s(1)*0.1);  % useless
 % WARNING: This step is problematic especially when inpainting needed
 % R_min = max([R_min R_FroI2 R_NucIFro R_Heuristic]);
 
-
-
 warning('off','MATLAB:rankDeficientMatrix');
 x = zeros(1,R_min);
 eta = zeros(D_u,N_u);
@@ -52,12 +50,6 @@ for R=R_min:R_max
     [u_hat,eta,x,av_eta] = fast_hstln_mo(u,R,'omega',Omega,...
                     'maxiter',100,'tol',1e-4);
      
-    % Warm start with previous estimates
-%     [u_hat,eta,x,av_eta] = hstln_mo(u,R,'omega',Omega,...
-%                     'maxiter',100,'tol',1e-4,...
-%                     'x0',x,'eta',eta); % to speed it up
-%     x = [x;min(x)/10]; 
-
     % recalculate average eta
     av_eta  = norm(bsxfun(@times,eta,Omega),'fro')/sum(Omega);
 

@@ -6,22 +6,13 @@ done = false;
 l = [];
 % TODO: write this loop better
 while ~done
-    
-    % find length 1 itls
-%     idx1 = find(itl.length==1);
-    
-    35;
-    
-    
-    
-    
-    
-    
+        
     for i=1:N_itl
     for j=1:N_itl
         gap = (itl(j).t_start - itl(i).t_end) - 1;
         if gap == 0
             if itl(i).length == 1 && itl(j).length > 1
+                
                 % grow to past
                 xy_j = itl(j).data(:,2:-1:1);
                 xy_i = itl(i).data;
@@ -33,10 +24,10 @@ while ~done
                     itl(i).t_start = -inf;
                     itl(i).t_end = -inf;                    
                     l = [l i];  % add to delete list
-%                     N_itl = N_itl-1;
-%                     done = false;
                 end
+                
             elseif itl(i).length > 1 && itl(j).length == 1
+                
                 % grow to future
                 xy_j = itl(j).data;
                 xy_i = itl(i).data(:,end-1:end);
@@ -48,8 +39,6 @@ while ~done
                     itl(j).t_start = -inf;
                     itl(j).t_end = -inf;
                     l = [l j];  % add to delete list
-%                     N_itl = N_itl-1;
-%                     done = false;
                 end
             else
                 % if they are both length 1 
@@ -67,6 +56,4 @@ while ~done
         N_itl = size(itl,2);        
     end
     
-%     dN_itl = N_itl - size(itl,2);
-%     N_itl = size(itl_2);
 end

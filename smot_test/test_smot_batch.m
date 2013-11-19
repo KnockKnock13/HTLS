@@ -17,7 +17,7 @@ datasetPath = '../smot_data';
 % Method to be tested
 % NOTE: IP method requires CVX to run, and a lot of patience! 
 methods = {'ihtls','admm','ip'};
-method  = methods{1};
+method  = methods{2};
 
 % Noise type to be tested
 noiseType = {'fn','fp'};

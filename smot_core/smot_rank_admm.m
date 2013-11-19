@@ -30,14 +30,7 @@ lambda = p.Results.lambda;
 % if omega has a 0 needs inpainting
 if sum(omega==0)>0
     % do inpainting
-    % mustafa's code requires scaling to (0-1)
-%     maxx = max(x(:));
-%     tx = x/maxx;
-%     tx_hat = l2_fastalm_mo(tx,lambda,'omega',omega);    
-%     x  = tx_hat*maxx;
       x = l2_fastalm_mo(x,lambda,'omega',omega);    
-%     [x ~] = cvx_min_hankel_rank_con(x,eta,omega);
-    35;
 end
 
 

@@ -57,37 +57,3 @@ if ~isempty(itlh)
     
 
 end
-
-
-
-
-
-
-
-
-% 
-% function A = compute_itl_associations(S,minS)
-% 
-% % 1) Use minus similarity, because lapjv solves minimization problem.
-% A = generalizedLinearAssignment(-S,-minS);
-% 
-% % N = size(S,2);
-% 
-% % 1) Use minus similarity, because lapjv solves minimization problem.
-% % 2) Use slack variables to relax sum(X)==1, so if there are very low
-% % similarities they will be omitted. Only confident associations will be
-% % processed
-% 
-% % S = [S  ones(N,N)*minS ];
-% % S = [S; ones(N,2*N)*minS ];
-% % [A,C] = lapjv(-S);
-% % A = A(1:N);
-% % A(A>N) = 0;
-% % 35;
-% 
-% 
-
-
-
-
-
