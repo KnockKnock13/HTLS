@@ -17,7 +17,8 @@ function [u_hat,eta,x,mu_eta] = fast_hstln_mo(u,R,varargin)
 %       x:   AR coefficients
 %       
 %
-%
+%   Update 12/17/2013 fix rank deficiency issue.
+%   Update 04/XX/2013 a lot of fixes, parametrization, using sparse matrices
 %   Written by Caglayan Dicle, 07/22/11 based on the paper:  
 %   I. Park, L. Zhang and J.B. Rosen   "Low rank approximation of
 %          a Hankel matrix by structured total least norm" 
@@ -128,17 +129,28 @@ for iter=1:maxiter
     M(1:nr,D_u*N_u+1:D_u*N_u+nc-1) = -w*(A+E);
     M(nr+1:end,1:D_u*N_u) = D;
     
+    
+    
     % solve minimization problem 
-    try
-        dparam = M\(-[w*r;D*eta]);
-        error(lastwarn);
-    catch err
-        [warnmsg,~] = lastwarn;
-        if isequal(warnmsg,'MATLAB:rankDeficientMatrix')
-            lastwarn('');
-            break;
-        end        
+%     try
+
+    % TODO: Do this appropriately. I can calculate the size of M.
+    if iter==1
+        [Mm,Mn] = size(M);
+        I = eye(max(Mm,Mn));
+        I = I(1:Mm,1:Mn);
+        I = I*1e-7;
     end
+        M = M + I;
+        dparam = M\(-[w*r;D*eta]);
+%         error(lastwarn);
+%     catch err
+%         [warnmsg,~] = lastwarn;
+%         if isequal(warnmsg,'MATLAB:rankDeficientMatrix')
+%             lastwarn('');
+%             break;
+%         end        
+%     end
 
     
     % update parameters
