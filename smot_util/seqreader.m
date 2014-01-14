@@ -30,16 +30,33 @@ classdef seqreader < handle
                 [this.seqPath,this.seqName,this.seqExt] = fileparts(inpath);
                 
             elseif ftype==7     % folder
-%               
-                [s,res] = system(['ls -1 ' inpath ' |egrep "\.png$|\.jpg$|\.jpeg$|\.ppm$"']);%               
-                % get the first file
-                ind = strfind(res,char(10));
-                                
-                this.seqPath = inpath;
-                this.seqName = res(1:ind(1)-5);
-                this.seqExt = res(ind(1)-4:ind(1)-1);
-                35;
-            else 
+                
+                % load file based on the operating system
+                % thanks to Sebastiano Vascon
+                if ispc==1
+                    res2 = [ dir(fullfile(inpath, '*.jpg')) ; dir(fullfile(inpath, '*.png')) ;
+                        dir(fullfile(inpath, '*.jpeg')) ; dir(fullfile(inpath, '*.ppm')) ];
+                    res=[];
+                    
+                    for i=1:size(res2,1)
+                        res=[res; res2(i).name];
+                    end
+                    
+                    this.seqPath = inpath;
+                    this.seqName = res(1,1:end-4);
+                    this.seqExt = res(1,end-3:end);
+                else
+                    
+                    [s,res] = system(['ls -1 ' inpath ' |egrep "\.png$|\.jpg$|\.jpeg$|\.ppm$"']);%
+                    % get the first file
+                    ind = strfind(res,char(10));
+                    
+                    this.seqPath = inpath;
+                    this.seqName = res(1:ind(1)-5);
+                    this.seqExt = res(ind(1)-4:ind(1)-1);
+                    35;
+                end
+            else
                 error('Path does not exist!');               
             end
             
