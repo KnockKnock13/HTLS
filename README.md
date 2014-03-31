@@ -63,3 +63,5 @@ The algorithm outputs itl structure with following fields
 		itl(n).data    : 2xlength xy locations of track n
 				
 where n is the index of the track. You can treat it as the id of the track,too. 
+
+see smot_test/test_smot_demo for a simple example.
