@@ -1,4 +1,4 @@
-# How to run the SMOT code?
+# How to run the SMOT code with SMOT data?
 
  (1) Download the code. It will create a smot directory.
  
@@ -29,3 +29,37 @@ The code works on MATLAB R2012a and that is pretty much the only requirement. I 
 
 Optionaly, if you want to test Interior Points (IP) method and have "patience" to run experiments with IP method, you need to install CVX toolbox from [CVX website](http://www.cvxr.com)
 
+
+# How to run the SMOT code on your data?
+
+This code merges the points that are input to the algorithm in idl structure. 
+
+idl is an struct array with field xy which holds the detection centers for each frame.
+
+		idl(t).xy   : Nx2 center xy locations  
+
+Here N is number of detections at time t. 
+
+As one can expect parameters are very important to get good results. param is also structure with following fields
+
+		param.similarity_method : rank estimation method 
+		min_s : minimum similarity threshold to merge two tracklets
+		hor   : horizon window that the algorithm operate in batches. Say if this is 60. Algorithm will process frames in batches 1-60, 61-120, 121-180 …
+		eta_max: inlier noise estimate for the detector. 
+		debug : debug flag. just set 0. 
+		
+The most crucial parameters are eta_max and horizon. One needs to play with them to get good results. Please see initialize_smot.m file to get an idea of how to set those parameters. 
+
+If you have the idl and param ready, you can call the algorithm then by typing
+
+		[itl,etime] = smot_associate(idl,param);
+
+The algorithm outputs itl structure with following fields 
+		
+		itl(n).t_start : start time of track n
+		itl(n).t_end   : end time of track n
+		itl(n).length  : length of track n
+		itl(n).omega   : 1/0 indicator array for occlusion
+		itl(n).data    : 2xlength xy locations of track n
+				
+where n is the index of the track. You can treat it as the id of the track,too. 
