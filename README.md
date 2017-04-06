@@ -1,4 +1,17 @@
-# How to run the SMOT code with SMOT data?
+# The Way They Move: Tracking Targets with Similar Appearance
+*Caglayan Dicle, Octavia Camps, Mario Sznaier*
+
+
+This is the official code repository for our [ICCV 2013 paper](http://www.cv-foundation.org/openaccess/content_iccv_2013/papers/Dicle_The_Way_They_2013_ICCV_paper.pdf)
+
+    @inproceedings{Dicle2013iccv,
+     author = {Dicle, Caglayan and Camps, Octavia and Sznaier, Mario},
+     title = {The Way They Move: Tracking Targets with Similar Appearance},
+     booktitle = {ICCV},
+     year = {2013},
+    }
+
+### How to run the SMOT code with SMOT data?
 
  (1) Download the code. It will create a smot directory.
  
@@ -16,13 +29,7 @@
 
  (5) Please cite to the paper
  	
-	@inproceedings{Dicle2013iccv,
- 	 author = {Dicle, Caglayan and Camps, Octavia and Sznaier, Mario},
-	 title = {The Way They Move: Tracking Targets with Similar Appearance},
-	 booktitle = {ICCV},
- 	 year = {2013},
- 	 pdf = {http://coe.neu.edu/~cdicle/papers/dicle_iccv13.pdf}
- 	}
+	
  	
 ### Prerequisites
 The code works on MATLAB R2012a and that is pretty much the only requirement. I did not test the code on other versions, however I expect it to work on newer versions, too, since I did not use obsolete functionality.
@@ -30,7 +37,7 @@ The code works on MATLAB R2012a and that is pretty much the only requirement. I 
 Optionaly, if you want to test Interior Points (IP) method and have "patience" to run experiments with IP method, you need to install CVX toolbox from [CVX website](http://www.cvxr.com)
 
 
-# How to run the SMOT code on your data?
+### How to run the SMOT code on your data?
 
 This code merges the points that are input to the algorithm in idl structure. 
 
