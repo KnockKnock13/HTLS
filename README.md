@@ -72,3 +72,6 @@ The algorithm outputs itl structure with following fields
 where n is the index of the track. You can treat it as the id of the track,too. 
 
 see smot_test/test_smot_demo for a simple example.
+
+### License
+MIT License except LAPJV functions see LICENSE file.
